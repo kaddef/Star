@@ -24,6 +24,8 @@ export async function fetchDoktorlar() {
             name: response.data[key].name,
             hospital: response.data[key].hospital,
             address: response.data[key].address,
+            lat: response.data[key].lat,
+            lng: response.data[key].lng
         };
         doktorlar.push(doktorlarObj);
     }

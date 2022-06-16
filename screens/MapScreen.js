@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-function MapScreen() {
+function MapScreen({ route }) {
+
 
     const [selectedLocation, setSelectedLocation] = useState();
 
-    const region = {
-        latitude: 41.008530509426826,
-        longitude: 28.980021017427504,
+    const [coords, setCoords] = useState({
+        latitude: 0,
+        longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
-    };
+    });
+    useEffect(() => {
+        setCoords({
+            latitude: route.params.lat,
+            longitude: route.params.lng,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+        })
+      },[]);
+    
+    
 
     function selectLocationHandler(event) {
-        const lat = event.nativeEvent.coordinate.latitude;
-        const lng = event.nativeEvent.coordinate.longitude;
+        const lat = event.nativeEvent.coordinate.latitude2;
+        const lng = event.nativeEvent.coordinate.longitude2;
         setSelectedLocation({ lat: lat, lng: lng });
     }
 
-    return <MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler}>
-        {selectedLocation && <Marker title = "Picked Location" coordinate={{ latitude: selectedLocation.lat, longitude: selectedLocation.lng }} />}
+    return <MapView style={styles.map} initialRegion={coords} onPress={selectLocationHandler}>
+        {selectedLocation && <Marker title="Picked Location" coordinate={{ latitude: selectedLocation.lat, longitude: selectedLocation.lng }} />}
     </MapView>
 
 }

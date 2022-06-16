@@ -6,10 +6,12 @@ import { Button } from "react-native-web";
 
 const DUMMY_DOC = [
     {
-        id: 'e1',
-        name: 'name dum',
+        id: 'e6',
+        name: 'deneme',
         hospital: 'hastane dum',
-        address: 'adresdum'
+        address: 'adresdum',
+        latitude: '32',
+        longitude: '11',
     }
 ];
 
@@ -18,10 +20,13 @@ function DoctorsScreen({ navigation }) {
 
     const [fetchedDoktorlar, setFetchedDoktorlar] = useState([]);
 
+    const [coordinates, setCoordinates] = useState({});
+
     useEffect(() => {
         async function getDoktorlar() {
             const doktorlar = await fetchDoktorlar();
             setFetchedDoktorlar(doktorlar);
+
         }
 
         getDoktorlar();
@@ -29,16 +34,23 @@ function DoctorsScreen({ navigation }) {
 
     function displaydoc() {
         return fetchedDoktorlar.map((item) => {
+
             return (
-                    <DoctorInfo name={item.name} hospital={item.hospital} address={item.address} onPress={pressHandler} />
+                <DoctorInfo key={item.id} name={item.name} hospital={item.hospital} address={item.address} onPress={() => pressHandler(item.lat, item.lng, item.name)} />
             );
         });
     }
 
 
-    function pressHandler() {
-        /*deneme(DUMMY_DOC[0]);*/
-        navigation.navigate('Harita');
+    function pressHandler(latitude, longitude, name) {
+        console.log(latitude, longitude, "asdasdasd", name);
+        /*postDoktorlar(DUMMY_DOC[0])*/
+        const templat = latitude;
+        const templng = longitude;
+        navigation.navigate('Harita', {
+            lat: templat,
+            lng: templng
+        });
     }
 
     return (
