@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Pressable, backgroundColor, ScrollView } from 'react-native';
+import DoctorsScreen from './screens/DoctorsScreen';
+import MapScreen from './screens/MapScreen';
+import AddDoctorScreen from './screens/AddDoctorScreen';
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="DoctorScreen" component={DoctorsScreen} />
+        <Stack.Screen name="AddDoctorScreen" component={AddDoctorScreen} />
+        <Stack.Screen name="Harita" component={MapScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
 });
